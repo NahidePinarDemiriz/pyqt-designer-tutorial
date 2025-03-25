@@ -41,6 +41,63 @@ class UI(QMainWindow):
         # Show the app
         self.show()
 
+    def checkWin(self):
+        # Across
+        if self.button1.text() != "" and self.button1.text() == self.button4.text() and self.button1.text() == self.button7.text():
+            self.win(self.button1, self.button4, self.button7)
+
+        if self.button2.text() != "" and self.button2.text() == self.button5.text() and self.button2.text() == self.button8.text():
+            self.win(self.button2, self.button5, self.button8)
+
+        if self.button3.text() != "" and self.button3.text() == self.button6.text() and self.button3.text() == self.button9.text():
+            self.win(self.button3, self.button6, self.button9)
+
+        # Down
+        if self.button1.text() != "" and self.button1.text() == self.button2.text() and self.button1.text() == self.button3.text():
+            self.win(self.button1, self.button2, self.button3)
+
+        if self.button4.text() != "" and self.button4.text() == self.button5.text() and self.button4.text() == self.button6.text():
+            self.win(self.button4, self.button5, self.button6)
+
+        if self.button7.text() != "" and self.button7.text() == self.button8.text() and self.button7.text() == self.button9.text():
+            self.win(self.button7, self.button8, self.button9)
+
+        # Diagonal
+        if self.button1.text() != "" and self.button1.text() == self.button5.text() and self.button1.text() == self.button9.text():
+            self.win(self.button1, self.button5, self.button9)
+
+        if self.button3.text() != "" and self.button3.text() == self.button5.text() and self.button3.text() == self.button7.text():
+            self.win(self.button3, self.button5, self.button7)
+
+    def win(self, a,b,c):
+        # Change the button colors to red
+        a.setStyleSheet('QPushButton {color: red;}')
+        b.setStyleSheet('QPushButton {color: red;}')
+        c.setStyleSheet('QPushButton {color: red;}')
+
+        # Add winner label
+        self.label.setText(f"{a.text()} Wins!")
+
+        # Disable the board
+        self.disable()
+
+    # Disable the board
+    def disable(self):
+        button_list = [
+            self.button1,
+            self.button2,
+            self.button3,
+            self.button4,
+            self.button5,
+            self.button6,
+            self.button7,
+            self.button8,
+            self.button9, ]
+
+        # Reset the buttons
+        for b in button_list:
+            b.setEnabled(False)
+
     # Click the buttons
     def clicker(self, b):
         if self.counter % 2 == 0:
@@ -56,6 +113,8 @@ class UI(QMainWindow):
         # Increment the counter
         self.counter += 1
 
+        # Check if won
+        self.checkWin()
 
     # Start Over
     def reset(self):
@@ -75,6 +134,9 @@ class UI(QMainWindow):
         for b in button_list:
             b.setText("")
             b.setEnabled(True)
+            # Reset the button colors
+            b.setStyleSheet('QPushButton {color: #797979;}')
+
 
         # Reset the label
         self.label.setText("X Goes First!")
